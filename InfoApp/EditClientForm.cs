@@ -7,7 +7,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
-namespace InfoApp
+namespace InfoApp 
 {
     public partial class EditClientForm : Form
     {

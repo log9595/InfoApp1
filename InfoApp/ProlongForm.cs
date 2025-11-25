@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace InfoApp
 {
-    public partial class ProlongForm : Form
+    public partial class ProlongForm : Form 
     {
         public class Posts
         {
