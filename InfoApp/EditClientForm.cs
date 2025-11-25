@@ -3,7 +3,6 @@ using NLog;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -41,7 +40,7 @@ namespace InfoApp
             public DateTime dateTo { get; set; }
             public int centerID { get; set; }
             public string password { get; set; }
-            public byte[] imageBytes { get; set; } = new byte[] { };
+            public byte[] imageBytes { get; set; }
             public string comment { get; set; }
         }
 
@@ -274,26 +273,17 @@ namespace InfoApp
         {
             try
             {
-                DialogResult result = MessageBox.Show("Сохранить изменения?", "Подтверждение формы", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-                if (result == DialogResult.OK)
+                using (MySqlConnection sqlConnection = ConnectionClass.GetStringConnection())
                 {
-                    using (MySqlConnection sqlConnection = ConnectionClass.GetStringConnection())
-                    {
-                        string query = $"update ECPTable set FIO = '{txtFIO.Text}', postID = {postList[cbPost.SelectedIndex].id}, orgID = {orgList[cbOrgStruct.SelectedIndex].id}, room = '{txtRoom.Text}', numbContainer = '{txtBox.Text}', dateFrom = '{dateFrom.Value:yyyy-MM-dd}', dateTo = '{dateTo.Value:yyyy-MM-dd}', centerID = {centerList[cbCenter.SelectedIndex].id}, password = '{SecurityManager.XorEncrypt(txtPassword.Text)}', imageBytes = @imageBytes, comment = '{txtComment.Text}' where id = {_id}";
-                        if (sqlConnection.State == ConnectionState.Closed)
-                            sqlConnection.Open();
+                    string query = $"update ECPTable set FIO = '{txtFIO.Text}', postID = {postList[cbPost.SelectedIndex].id}, orgID = {orgList[cbOrgStruct.SelectedIndex].id}, room = '{txtRoom.Text}', numbContainer = '{txtBox.Text}', dateFrom = '{dateFrom.Value:yyyy-MM-dd}', dateTo = '{dateTo.Value:yyyy-MM-dd}', centerID = {centerList[cbCenter.SelectedIndex].id}, password = '{SecurityManager.XorEncrypt(txtPassword.Text)}', imageBytes = '{editList[0].imageBytes}', comment = '{txtComment.Text}' where id = {_id}";
+                    if (sqlConnection.State == ConnectionState.Closed)
+                        sqlConnection.Open();
 
-                        using (MySqlCommand cmd = new MySqlCommand(query, sqlConnection))
-                        {
-                            cmd.Parameters.Add("@imageBytes", MySqlDbType.LongBlob).Value = editList[0].imageBytes;
-                            cmd.ExecuteNonQuery();
-                        }
-                        
-                        MessageBox.Show("Внесенные изменения успешно сохранены", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        this.Close();
-                    }
+                    MySqlCommand sqlCommand = new MySqlCommand(query, sqlConnection);
+                    sqlCommand.ExecuteNonQuery();
+                    MessageBox.Show("Внесенные изменения успешно сохранены", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Close();
                 }
-                
             }
             catch (Exception ex)
             {

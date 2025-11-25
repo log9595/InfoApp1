@@ -37,8 +37,6 @@ namespace InfoApp
             public DateTime dateFrom { get; set; }
             public DateTime dateTo { get; set; }
             public int centerID { get; set; }
-            public string password { get; set; }
-            public byte[] imageBytes { get; set; } = new byte[] { };
             public string comment { get; set; }
         }
 
@@ -224,7 +222,7 @@ namespace InfoApp
                 {
                     if (sqlConnection.State == ConnectionState.Closed)
                         sqlConnection.Open();
-                    string query = "select id, FIO, postID, orgID, room, numbContainer, dateFrom, dateTo, centerID, imageBytes, comment from ECPTable" +
+                    string query = "select id, FIO, postID, orgID, room, numbContainer, dateFrom, dateTo, centerID, comment from ECPTable" +
                                   $" where id = {_id}";
 
                     MySqlCommand sqlCommand = new MySqlCommand(query, sqlConnection);
@@ -232,7 +230,7 @@ namespace InfoApp
 
                     while (reader.Read())
                     {
-                        editList.Add(new EditData { id = reader.GetInt32(0), FIO = reader.GetString(1), postID = reader.GetInt32(2), orgID = reader.GetInt32(3), room = reader.GetString(4), numbContainer = reader.GetString(5), dateFrom = reader.GetDateTime(6), dateTo = reader.GetDateTime(7), centerID = reader.GetInt32(8), imageBytes = reader.GetFieldValue<byte[]>(9), comment = reader.GetString(10) });
+                        editList.Add(new EditData { id = reader.GetInt32(0), FIO = reader.GetString(1), postID = reader.GetInt32(2), orgID = reader.GetInt32(3), room = reader.GetString(4), numbContainer = reader.GetString(5), dateFrom = reader.GetDateTime(6), dateTo = reader.GetDateTime(7), centerID = reader.GetInt32(8), comment = reader.GetString(9) });
                     }
                 }
 
@@ -264,14 +262,9 @@ namespace InfoApp
 
                     MySqlCommand sqlCommand = new MySqlCommand(query, sqlConnection);
                     sqlCommand.ExecuteNonQuery();
-
-                    query = $"insert into ECPTable (FIO, postID, orgID, room, numbContainer, dateFrom, dateTo, centerID, password, imageBytes, comment) value ('{txtFIO.Text}', {postList[cbPost.SelectedIndex].id}, {orgList[cbOrgStruct.SelectedIndex].id}, '{txtRoom.Text}', '{txtBox.Text}', '{dateFrom.Value:yyyy-MM-dd}', '{dateTo.Value:yyyy-MM-dd}', {centerList[cbCenter.SelectedIndex].id}, '{SecurityManager.XorEncrypt(txtPassword.Text)}', @imageBytes, '{txtComment.Text}')";
-                    using (MySqlCommand cmd = new MySqlCommand(query, sqlConnection))
-                    {
-                        cmd.Parameters.Add("@imageBytes", MySqlDbType.LongBlob).Value = editList[0].imageBytes;
-                        cmd.ExecuteNonQuery();
-                    }
                 }
+
+                AddDataClass.InsertData($"insert into ECPTable (FIO, postID, orgID, room, numbContainer, dateFrom, dateTo, centerID, comment) value ('{txtFIO.Text}', {postList[cbPost.SelectedIndex].id}, {orgList[cbOrgStruct.SelectedIndex].id}, '{txtRoom.Text}', '{txtBox.Text}', '{dateFrom.Value:yyyy-MM-dd}', '{dateTo.Value:yyyy-MM-dd}', {centerList[cbCenter.SelectedIndex].id}, '{txtComment.Text}')");
                 MessageBox.Show("Цифровая подпись успешно продлена", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
@@ -293,38 +286,6 @@ namespace InfoApp
                     LoadCenter();
                     cbCenter.SelectedItem = cbText;
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                logger.Debug("\n/--------------------------------------------------------------------/\n" + ex.StackTrace + "\n//----------------------------//\n" + ex.Message + "\n\n");
-            }
-        }
-
-        private void btnCreatePass_Click(object sender, EventArgs e)
-        {
-            string passwordString = string.Empty;
-            try
-            {
-                if (string.IsNullOrEmpty(txtFIO.Text))
-                    return;
-
-                if (txtFIO.Text.Trim().Split(' ').Length < 2)
-                {
-                    MessageBox.Show("Необходимо указать хотя бы Фамилию и Имя", "Неверные входные данные", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                passwordString = ECPPassGenerator.Process(txtFIO.Text);
-
-                if (passwordString is null)
-                {
-                    MessageBox.Show("Не удалось сгенерировать пароль из заданной строки.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                if (passwordString != null)
-                    txtPassword.Text = passwordString;
             }
             catch (Exception ex)
             {
