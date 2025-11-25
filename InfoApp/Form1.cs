@@ -432,6 +432,25 @@ namespace InfoApp
                         // Save PDF document
                         document.Save(openFileDialog.FileName);
                     }
+
+
+                    AddDataClass.InsertData($"insert into DocumentState (docName, ecp_id) values('{System.IO.Path.GetFileNameWithoutExtension(openFileDialog.FileName)}', {cert.Id})");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                logger.Debug("\n/--------------------------------------------------------------------/\n" + ex.StackTrace + "\n//----------------------------//\n" + ex.Message + "\n\n");
+            }
+        }
+
+        private void btnDocs_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (DocumentTrackingForm documentTrackingForm = new DocumentTrackingForm())
+                {
+                    documentTrackingForm.ShowDialog();
                 }
             }
             catch (Exception ex)

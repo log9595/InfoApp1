@@ -68,6 +68,7 @@
             this.connectionProps_Item = new System.Windows.Forms.ToolStripMenuItem();
             this.usersManage_Item = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSignDoc = new System.Windows.Forms.Button();
+            this.btnDocs = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.contextMenu.SuspendLayout();
@@ -345,19 +346,30 @@
             // 
             // btnSignDoc
             // 
-            this.btnSignDoc.Location = new System.Drawing.Point(451, 13);
+            this.btnSignDoc.Location = new System.Drawing.Point(421, 10);
             this.btnSignDoc.Name = "btnSignDoc";
-            this.btnSignDoc.Size = new System.Drawing.Size(133, 32);
+            this.btnSignDoc.Size = new System.Drawing.Size(143, 21);
             this.btnSignDoc.TabIndex = 32;
             this.btnSignDoc.Text = "Подписать документы";
             this.btnSignDoc.UseVisualStyleBackColor = true;
             this.btnSignDoc.Click += new System.EventHandler(this.btnSignDoc_Click);
+            // 
+            // btnDocs
+            // 
+            this.btnDocs.Location = new System.Drawing.Point(421, 32);
+            this.btnDocs.Name = "btnDocs";
+            this.btnDocs.Size = new System.Drawing.Size(143, 21);
+            this.btnDocs.TabIndex = 33;
+            this.btnDocs.Text = "Просмотреть документы";
+            this.btnDocs.UseVisualStyleBackColor = true;
+            this.btnDocs.Click += new System.EventHandler(this.btnDocs_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(707, 459);
+            this.Controls.Add(this.btnDocs);
             this.Controls.Add(this.btnSignDoc);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnDelete);
@@ -412,6 +424,7 @@
         private System.Windows.Forms.ToolStripMenuItem usersManage_Item;
         private System.Windows.Forms.ToolStripMenuItem changeUser_item;
         private System.Windows.Forms.Button btnSignDoc;
+        private System.Windows.Forms.Button btnDocs;
     }
 }
 
