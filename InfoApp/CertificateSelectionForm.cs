@@ -93,13 +93,6 @@ namespace InfoApp
 
                     dataGridView1.DataSource = dataTable;
 
-                    for (int i = 0; i < dataTable.Rows.Count; i++)
-                    {
-                        if ((Convert.ToDateTime(dataGridView1[7, i].Value.ToString()) >= firstDateChangeMonth && Convert.ToDateTime(dataGridView1[7, i].Value.ToString()) <= lastDateChangeMonth) || Convert.ToDateTime(dataGridView1[7, i].Value.ToString()) <= currentMonth)
-                        {
-                            dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Red;
-                        }
-                    }
                 }
             }
             catch (Exception ex)

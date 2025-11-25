@@ -394,7 +394,8 @@ namespace InfoApp
             try
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "PDF Files | .pdf";
+                openFileDialog.InitialDirectory = Environment.CurrentDirectory;
+                openFileDialog.Filter = "PDF Files | *.pdf";
                 DialogResult result = openFileDialog.ShowDialog();
 
                 if (result == DialogResult.OK)
@@ -415,16 +416,17 @@ namespace InfoApp
                             $"{cert.FIO}",
                             new Aspose.Pdf.Text.TextState()
                             {
-                                FontSize = 72,
+                                FontSize = 50,
                                 ForegroundColor = Aspose.Pdf.Color.Blue,
+                                BackgroundColor = Aspose.Pdf.Color.BlueViolet,
                                 Font = Aspose.Pdf.Text.FontRepository.FindFont("Courier")
                             });
                         // Set watermark properties
                         artifact.ArtifactHorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Center;
-                        artifact.ArtifactVerticalAlignment = Aspose.Pdf.VerticalAlignment.Center;
-                        artifact.Rotation = 45;
+                        artifact.ArtifactVerticalAlignment = Aspose.Pdf.VerticalAlignment.Top;
+                        artifact.Rotation = 0;
                         artifact.Opacity = 0.5;
-                        artifact.IsBackground = true;
+                        artifact.IsBackground = false;
                         // Add watermark artifact to the first page
                         document.Pages[1].Artifacts.Add(artifact);
                         // Save PDF document
