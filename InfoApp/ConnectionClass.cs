@@ -12,7 +12,7 @@ namespace InfoApp
         {
             try
             {
-                MySqlConnection sqlConnection = new MySqlConnection($"server={Properties.Settings.Default.serverName};user id={Properties.Settings.Default.user}; password = {Properties.Settings.Default.password}; database={Properties.Settings.Default.dbName}");
+                MySqlConnection sqlConnection = new MySqlConnection($"server={Properties.Settings.Default.serverName};user id={Properties.Settings.Default.user}; password = {Properties.Settings.Default.password}; database={Properties.Settings.Default.dbName};Convert Zero Datetime=True;");
                 return sqlConnection;
             }
             catch (Exception ex)

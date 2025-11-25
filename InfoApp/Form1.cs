@@ -434,7 +434,7 @@ namespace InfoApp
                     }
 
 
-                    AddDataClass.InsertData($"insert into DocumentState (docName, ecp_id) values('{System.IO.Path.GetFileNameWithoutExtension(openFileDialog.FileName)}', {cert.Id})");
+                    AddDataClass.InsertData($"insert into DocumentState (docName, signDate, ecp_id) values('{System.IO.Path.GetFileNameWithoutExtension(openFileDialog.FileName)}', DATE'{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}', {cert.Id})");
                 }
             }
             catch (Exception ex)
