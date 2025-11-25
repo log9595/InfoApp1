@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Windows.Forms; 
+using System.Windows.Forms;
 
 namespace InfoApp
 {
@@ -34,7 +34,7 @@ namespace InfoApp
         List<Orgs> orgList = new List<Orgs>();
         List<Centers> centerList = new List<Centers>();
 
-        private byte[] imageBytes { get; set; } = null;
+        private byte[] imageBytes { get; set; } = new byte[] { };
 
         public AddClientForm()
         {
@@ -202,17 +202,22 @@ namespace InfoApp
 
             try
             {
-                using (MySqlConnection sqlConnection = ConnectionClass.GetStringConnection())
+                DialogResult result = MessageBox.Show("Добавить нового клиента с указанными данными?", "Подтверждение формы", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.OK)
                 {
-                    string query = $"insert into ECPTable (FIO, postID, orgID, room, numbContainer, dateFrom, dateTo, centerID, password, imageBytes, comment) value ('{txtFIO.Text}', {postList[cbPost.SelectedIndex].id}, {orgList[cbOrgStruct.SelectedIndex].id}, '{txtRoom.Text}', '{txtBox.Text}', '{dateFrom.Value:yyyy-MM-dd}', '{dateTo.Value:yyyy-MM-dd}', {centerList[cbCenter.SelectedIndex].id}, '{SecurityManager.XorEncrypt(txtPassword.Text)}', @imageBytes, '{txtComment.Text}')";
-                    if (sqlConnection.State == ConnectionState.Closed)
-                        sqlConnection.Open();
-
-                    using (MySqlCommand cmd = new MySqlCommand(query, sqlConnection))
+                    using (MySqlConnection sqlConnection = ConnectionClass.GetStringConnection())
                     {
-                        cmd.Parameters.Add("@imageBytes", MySqlDbType.LongBlob).Value = imageBytes;
-                        cmd.ExecuteNonQuery();
+                        string query = $"insert into ECPTable (FIO, postID, orgID, room, numbContainer, dateFrom, dateTo, centerID, password, imageBytes, comment) value ('{txtFIO.Text}', {postList[cbPost.SelectedIndex].id}, {orgList[cbOrgStruct.SelectedIndex].id}, '{txtRoom.Text}', '{txtBox.Text}', '{dateFrom.Value:yyyy-MM-dd}', '{dateTo.Value:yyyy-MM-dd}', {centerList[cbCenter.SelectedIndex].id}, '{SecurityManager.XorEncrypt(txtPassword.Text)}', @imageBytes, '{txtComment.Text}')";
+                        if (sqlConnection.State == ConnectionState.Closed)
+                            sqlConnection.Open();
+
+                        using (MySqlCommand cmd = new MySqlCommand(query, sqlConnection))
+                        {
+                            cmd.Parameters.Add("@imageBytes", MySqlDbType.LongBlob).Value = imageBytes;
+                            cmd.ExecuteNonQuery();
+                        }
                     }
+                    this.Close();
                 }
             }
             catch (Exception ex)
