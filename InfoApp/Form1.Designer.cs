@@ -64,9 +64,10 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.changeUser_item = new System.Windows.Forms.ToolStripMenuItem();
             this.connectionProps_Item = new System.Windows.Forms.ToolStripMenuItem();
             this.usersManage_Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.changeUser_item = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSignDoc = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.contextMenu.SuspendLayout();
@@ -319,7 +320,14 @@
             this.connectionProps_Item,
             this.usersManage_Item});
             this.contextMenu.Name = "contextMenu";
-            this.contextMenu.Size = new System.Drawing.Size(235, 92);
+            this.contextMenu.Size = new System.Drawing.Size(235, 70);
+            // 
+            // changeUser_item
+            // 
+            this.changeUser_item.Name = "changeUser_item";
+            this.changeUser_item.Size = new System.Drawing.Size(234, 22);
+            this.changeUser_item.Text = "Сменить пользователя";
+            this.changeUser_item.Click += new System.EventHandler(this.changeUser_item_Click);
             // 
             // connectionProps_Item
             // 
@@ -335,18 +343,22 @@
             this.usersManage_Item.Text = "Управление пользователями";
             this.usersManage_Item.Click += new System.EventHandler(this.usersManage_Item_Click);
             // 
-            // changeUser_item
+            // btnSignDoc
             // 
-            this.changeUser_item.Name = "changeUser_item";
-            this.changeUser_item.Size = new System.Drawing.Size(234, 22);
-            this.changeUser_item.Text = "Сменить пользователя";
-            this.changeUser_item.Click += new System.EventHandler(this.changeUser_item_Click);
+            this.btnSignDoc.Location = new System.Drawing.Point(451, 13);
+            this.btnSignDoc.Name = "btnSignDoc";
+            this.btnSignDoc.Size = new System.Drawing.Size(133, 32);
+            this.btnSignDoc.TabIndex = 32;
+            this.btnSignDoc.Text = "Подписать документы";
+            this.btnSignDoc.UseVisualStyleBackColor = true;
+            this.btnSignDoc.Click += new System.EventHandler(this.btnSignDoc_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(707, 459);
+            this.Controls.Add(this.btnSignDoc);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.label1);
@@ -399,6 +411,7 @@
         private System.Windows.Forms.ToolStripMenuItem connectionProps_Item;
         private System.Windows.Forms.ToolStripMenuItem usersManage_Item;
         private System.Windows.Forms.ToolStripMenuItem changeUser_item;
+        private System.Windows.Forms.Button btnSignDoc;
     }
 }
 

@@ -1,9 +1,9 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Aspose.Pdf;
+using MySql.Data.MySqlClient;
 using NLog;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace InfoApp
@@ -99,7 +99,7 @@ namespace InfoApp
                     {
                         if ((Convert.ToDateTime(dataGridView1[7, i].Value.ToString()) >= firstDateChangeMonth && Convert.ToDateTime(dataGridView1[7, i].Value.ToString()) <= lastDateChangeMonth) || Convert.ToDateTime(dataGridView1[7, i].Value.ToString()) <= currentMonth)
                         {
-                            dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                            dataGridView1.Rows[i].DefaultCellStyle.BackColor = System.Drawing.Color.Red;
                         }
                     }
                 }
@@ -220,7 +220,7 @@ namespace InfoApp
                 {
                     if ((Convert.ToDateTime(dataGridView1[7, i].Value.ToString()) >= firstDateChangeMonth && Convert.ToDateTime(dataGridView1[7, i].Value.ToString()) <= lastDateChangeMonth) || Convert.ToDateTime(dataGridView1[7, i].Value.ToString()) <= currentMonth)
                     {
-                        dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                        dataGridView1.Rows[i].DefaultCellStyle.BackColor = System.Drawing.Color.Red;
                     }
                 }
             }
@@ -303,7 +303,7 @@ namespace InfoApp
                 {
                     if ((Convert.ToDateTime(dataGridView1[7, i].Value.ToString()) >= firstDateChangeMonth && Convert.ToDateTime(dataGridView1[7, i].Value.ToString()) <= lastDateChangeMonth) || Convert.ToDateTime(dataGridView1[7, i].Value.ToString()) <= currentMonth)
                     {
-                        dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                        dataGridView1.Rows[i].DefaultCellStyle.BackColor = System.Drawing.Color.Red;
                     }
                 }
             }
@@ -339,7 +339,7 @@ namespace InfoApp
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
-            contextMenu.Show(pictureBox1, new Point(e.X - contextMenu.Width, e.Y));
+            contextMenu.Show(pictureBox1, new System.Drawing.Point(e.X - contextMenu.Width, e.Y));
         }
 
         private void connectionProps_Item_Click(object sender, EventArgs e)
@@ -381,6 +381,56 @@ namespace InfoApp
             try
             {
                 Authorize();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                logger.Debug("\n/--------------------------------------------------------------------/\n" + ex.StackTrace + "\n//----------------------------//\n" + ex.Message + "\n\n");
+            }
+        }
+
+        private void btnSignDoc_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "PDF Files | .pdf";
+                DialogResult result = openFileDialog.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    Certificate cert = new Certificate();
+                    using (CertificateSelectionForm selectionForm = new CertificateSelectionForm())
+                    {
+                        selectionForm.ShowDialog();
+                        cert = selectionForm.Certificate;
+                    }
+
+                    // Open PDF document
+                    using (Document document = new Aspose.Pdf.Document(openFileDialog.FileName))
+                    {
+                        // Create a new watermark artifact
+                        WatermarkArtifact artifact = new Aspose.Pdf.WatermarkArtifact();
+                        artifact.SetTextAndState(
+                            $"{cert.FIO}",
+                            new Aspose.Pdf.Text.TextState()
+                            {
+                                FontSize = 72,
+                                ForegroundColor = Aspose.Pdf.Color.Blue,
+                                Font = Aspose.Pdf.Text.FontRepository.FindFont("Courier")
+                            });
+                        // Set watermark properties
+                        artifact.ArtifactHorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Center;
+                        artifact.ArtifactVerticalAlignment = Aspose.Pdf.VerticalAlignment.Center;
+                        artifact.Rotation = 45;
+                        artifact.Opacity = 0.5;
+                        artifact.IsBackground = true;
+                        // Add watermark artifact to the first page
+                        document.Pages[1].Artifacts.Add(artifact);
+                        // Save PDF document
+                        document.Save(openFileDialog.FileName);
+                    }
+                }
             }
             catch (Exception ex)
             {

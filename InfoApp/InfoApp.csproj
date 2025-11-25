@@ -39,6 +39,9 @@
     <ApplicationIcon>Office_-22_icon-icons.com_73980.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.PDF, Version=25.11.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <HintPath>..\packages\Aspose.PDF.25.11.0\lib\net4.8\Aspose.PDF.dll</HintPath>
+    </Reference>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <HintPath>..\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
@@ -147,12 +150,20 @@
     <Compile Include="AuthForm.Designer.cs">
       <DependentUpon>AuthForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Certificate.cs" />
+    <Compile Include="CertificateSelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CertificateSelectionForm.Designer.cs">
+      <DependentUpon>CertificateSelectionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ConnectionSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ConnectionSettingsForm.Designer.cs">
       <DependentUpon>ConnectionSettingsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DocumentState.cs" />
     <Compile Include="ECPPassGenerator.cs" />
     <Compile Include="EnumHelper.cs" />
     <Compile Include="PictureBoxForm.cs">
@@ -209,6 +220,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AuthForm.resx">
       <DependentUpon>AuthForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CertificateSelectionForm.resx">
+      <DependentUpon>CertificateSelectionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ConnectionSettingsForm.resx">
       <DependentUpon>ConnectionSettingsForm.cs</DependentUpon>
