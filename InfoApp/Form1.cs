@@ -115,7 +115,8 @@ namespace InfoApp
         {
             if (User.AccessLevel != UserAccessLevel.Administrator)
             {
-                pictureBox1.Visible = false;
+                connectionProps_Item.Visible = false;
+                usersManage_Item.Visible = false;
             }
 
             if (User.AccessLevel == UserAccessLevel.Read)
@@ -128,27 +129,34 @@ namespace InfoApp
             }
         }
 
+        private void Authorize()
+        {
+            User = new UserInstance();
+
+            using (AuthForm authForm = new AuthForm())
+            {
+                authForm.ShowDialog();
+                User = new UserInstance()
+                {
+                    Id = authForm.User.Id,
+                    Login = authForm.User.Login,
+                    AccessLevel = authForm.User.AccessLevel
+                };
+            }
+
+            if (User.Id == 0)
+            {
+                this.Close();
+            }
+
+            AdjustToolsToUserAccesLevel();
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             try
             {
-                using (AuthForm authForm = new AuthForm())
-                {
-                    authForm.ShowDialog();
-                    User = new UserInstance()
-                    {
-                        Id = authForm.User.Id,
-                        Login = authForm.User.Login,
-                        AccessLevel = authForm.User.AccessLevel
-                    };
-                }
-
-                if (User.Id == 0)
-                {
-                    this.Close();
-                }
-
-                AdjustToolsToUserAccesLevel();
+                Authorize();
 
                 LoadOrgstruct();
                 LoadFunc("");
@@ -360,6 +368,19 @@ namespace InfoApp
                 {
                     usersManageForm.ShowDialog();
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                logger.Debug("\n/--------------------------------------------------------------------/\n" + ex.StackTrace + "\n//----------------------------//\n" + ex.Message + "\n\n");
+            }
+        }
+
+        private void changeUser_item_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Authorize();
             }
             catch (Exception ex)
             {
