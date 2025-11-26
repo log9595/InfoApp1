@@ -119,6 +119,11 @@ namespace InfoApp
                 connectionProps_Item.Visible = false;
                 usersManage_Item.Visible = false;
             }
+            else
+            {
+                connectionProps_Item.Visible = true;
+                usersManage_Item.Visible = true;
+            }
 
             if (User.AccessLevel == UserAccessLevel.Read)
             {
@@ -127,6 +132,14 @@ namespace InfoApp
                 btnProlong.Enabled = false;
                 btnDelete.Enabled = false;
                 button1.Enabled = false;
+            }
+            else
+            {
+                AddForm.Enabled = true;
+                btnEdit.Enabled = true;
+                btnProlong.Enabled = true;
+                btnDelete.Enabled = true;
+                button1.Enabled = true;
             }
         }
 
@@ -420,7 +433,7 @@ namespace InfoApp
                                             50, IronPdf.Editing.VerticalAlignment.Top, IronPdf.Editing.HorizontalAlignment.Right)
                         .SaveAs(Path.Combine(Environment.CurrentDirectory, "Signed", openFileDialog.SafeFileName));
 
-                    AddDataClass.InsertData($"insert into DocumentState (docName, signDate, ecp_id) values('{System.IO.Path.GetFileNameWithoutExtension(openFileDialog.FileName)}', DATE'{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}', {cert.Id})");
+                    AddDataClass.InsertData($"insert into DocumentState (docName, signDate, ecp_id) values('{System.IO.Path.GetFileNameWithoutExtension(openFileDialog.FileName)}', '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}', {cert.Id})");
                 }
             }
             catch (Exception ex)
