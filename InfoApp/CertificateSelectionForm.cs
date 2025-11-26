@@ -70,9 +70,12 @@ namespace InfoApp
             try
             {
                 string query = "select et.id," +
+                                     " numbContainer," +
                                      " FIO," +
                                      " postName," +
-                                     " OrgStructure " +
+                                     " OrgStructure," +
+                                     " dateFrom," +
+                                     " dateTo " +
                                " from ECPTable et" +
                                " left join PostTable pt on et.postID = pt.id" +
                                " left join OrgTable ot on et.orgID = ot.id" +
@@ -110,15 +113,30 @@ namespace InfoApp
                     return;
 
                 DataGridViewRow row = dataGridView1.CurrentRow;
-                Certificate = new Certificate()
-                {
-                    Id = (int)row.Cells["id"].Value,
-                    FIO = row.Cells["FIO"].Value.ToString(),
-                    PostName = row.Cells["postName"].Value.ToString(),
-                    OrgStructName = row.Cells["OrgStructure"].Value.ToString()
-                };
 
-                this.Close();
+                using (CertPasswordForm passForm = new CertPasswordForm((int)row.Cells["id"].Value))
+                {
+                    passForm.ShowDialog();
+                    if (passForm.IsAuthorized)
+                    {
+                        Certificate = new Certificate()
+                        {
+                            Id = (int)row.Cells["id"].Value,
+                            NumbContainer = row.Cells["numbContainer"].Value.ToString(),
+                            FIO = row.Cells["FIO"].Value.ToString(),
+                            PostName = row.Cells["postName"].Value.ToString(),
+                            OrgStructName = row.Cells["OrgStructure"].Value.ToString(),
+                            DateFrom = (DateTime)row.Cells["dateFrom"].Value,
+                            DateTo = (DateTime)row.Cells["dateTo"].Value
+                        };
+
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ключ указан неверно.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
             catch (Exception ex)
             {

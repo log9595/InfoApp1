@@ -28,22 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.btnApply = new System.Windows.Forms.Button();
             this.cbOrgStruct = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btnSelect = new System.Windows.Forms.Button();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.numbContainer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dateFrom = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dateTo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FIO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.postName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OrgStructure = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnSelect = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -99,17 +102,20 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.id,
+            this.numbContainer,
+            this.dateFrom,
+            this.dateTo,
             this.FIO,
             this.postName,
             this.OrgStructure});
@@ -121,49 +127,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(715, 328);
             this.dataGridView1.TabIndex = 30;
             // 
-            // id
-            // 
-            this.id.DataPropertyName = "id";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.id.DefaultCellStyle = dataGridViewCellStyle12;
-            this.id.HeaderText = "id";
-            this.id.Name = "id";
-            this.id.ReadOnly = true;
-            this.id.Visible = false;
-            // 
-            // FIO
-            // 
-            this.FIO.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.FIO.DataPropertyName = "FIO";
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.FIO.DefaultCellStyle = dataGridViewCellStyle13;
-            this.FIO.FillWeight = 60F;
-            this.FIO.HeaderText = "Ф.И.О.";
-            this.FIO.Name = "FIO";
-            this.FIO.ReadOnly = true;
-            // 
-            // postName
-            // 
-            this.postName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.postName.DataPropertyName = "postName";
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.postName.DefaultCellStyle = dataGridViewCellStyle14;
-            this.postName.FillWeight = 40F;
-            this.postName.HeaderText = "Должность";
-            this.postName.Name = "postName";
-            this.postName.ReadOnly = true;
-            // 
-            // OrgStructure
-            // 
-            this.OrgStructure.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.OrgStructure.DataPropertyName = "OrgStructure";
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.OrgStructure.DefaultCellStyle = dataGridViewCellStyle15;
-            this.OrgStructure.FillWeight = 40F;
-            this.OrgStructure.HeaderText = "Отдел/отделение";
-            this.OrgStructure.Name = "OrgStructure";
-            this.OrgStructure.ReadOnly = true;
-            // 
             // btnSelect
             // 
             this.btnSelect.Location = new System.Drawing.Point(562, 405);
@@ -173,6 +136,73 @@
             this.btnSelect.Text = "Выбрать";
             this.btnSelect.UseVisualStyleBackColor = true;
             this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
+            // 
+            // id
+            // 
+            this.id.DataPropertyName = "id";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.id.DefaultCellStyle = dataGridViewCellStyle2;
+            this.id.HeaderText = "id";
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.Visible = false;
+            // 
+            // numbContainer
+            // 
+            this.numbContainer.DataPropertyName = "numbContainer";
+            this.numbContainer.HeaderText = "№ носителя";
+            this.numbContainer.Name = "numbContainer";
+            this.numbContainer.ReadOnly = true;
+            this.numbContainer.Visible = false;
+            // 
+            // dateFrom
+            // 
+            this.dateFrom.DataPropertyName = "dateFrom";
+            this.dateFrom.HeaderText = "Дата начала";
+            this.dateFrom.Name = "dateFrom";
+            this.dateFrom.ReadOnly = true;
+            this.dateFrom.Visible = false;
+            // 
+            // dateTo
+            // 
+            this.dateTo.DataPropertyName = "dateTo";
+            this.dateTo.HeaderText = "Дата окончания";
+            this.dateTo.Name = "dateTo";
+            this.dateTo.ReadOnly = true;
+            this.dateTo.Visible = false;
+            // 
+            // FIO
+            // 
+            this.FIO.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.FIO.DataPropertyName = "FIO";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.FIO.DefaultCellStyle = dataGridViewCellStyle3;
+            this.FIO.FillWeight = 60F;
+            this.FIO.HeaderText = "Ф.И.О.";
+            this.FIO.Name = "FIO";
+            this.FIO.ReadOnly = true;
+            // 
+            // postName
+            // 
+            this.postName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.postName.DataPropertyName = "postName";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.postName.DefaultCellStyle = dataGridViewCellStyle4;
+            this.postName.FillWeight = 40F;
+            this.postName.HeaderText = "Должность";
+            this.postName.Name = "postName";
+            this.postName.ReadOnly = true;
+            // 
+            // OrgStructure
+            // 
+            this.OrgStructure.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.OrgStructure.DataPropertyName = "OrgStructure";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.OrgStructure.DefaultCellStyle = dataGridViewCellStyle5;
+            this.OrgStructure.FillWeight = 40F;
+            this.OrgStructure.HeaderText = "Отдел/отделение";
+            this.OrgStructure.Name = "OrgStructure";
+            this.OrgStructure.ReadOnly = true;
             // 
             // CertificateSelectionForm
             // 
@@ -204,10 +234,13 @@
         private System.Windows.Forms.ComboBox cbOrgStruct;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button btnSelect;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn numbContainer;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dateFrom;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dateTo;
         private System.Windows.Forms.DataGridViewTextBoxColumn FIO;
         private System.Windows.Forms.DataGridViewTextBoxColumn postName;
         private System.Windows.Forms.DataGridViewTextBoxColumn OrgStructure;
-        private System.Windows.Forms.Button btnSelect;
     }
 }

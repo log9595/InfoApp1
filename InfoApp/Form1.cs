@@ -1,10 +1,11 @@
-﻿using Aspose.Pdf;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using NLog;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
+using IronPdf;
+using System.IO;
 
 namespace InfoApp
 {
@@ -405,34 +406,19 @@ namespace InfoApp
                     {
                         selectionForm.ShowDialog();
                         cert = selectionForm.Certificate;
+                        if (cert.Id <= 0)
+                            return;
                     }
 
-                    // Open PDF document
-                    using (Document document = new Aspose.Pdf.Document(openFileDialog.FileName))
+                    if (!Directory.Exists("Signed"))
                     {
-                        // Create a new watermark artifact
-                        WatermarkArtifact artifact = new Aspose.Pdf.WatermarkArtifact();
-                        artifact.SetTextAndState(
-                            $"{cert.FIO}",
-                            new Aspose.Pdf.Text.TextState()
-                            {
-                                FontSize = 50,
-                                ForegroundColor = Aspose.Pdf.Color.Blue,
-                                BackgroundColor = Aspose.Pdf.Color.BlueViolet,
-                                Font = Aspose.Pdf.Text.FontRepository.FindFont("Courier")
-                            });
-                        // Set watermark properties
-                        artifact.ArtifactHorizontalAlignment = Aspose.Pdf.HorizontalAlignment.Center;
-                        artifact.ArtifactVerticalAlignment = Aspose.Pdf.VerticalAlignment.Top;
-                        artifact.Rotation = 0;
-                        artifact.Opacity = 0.5;
-                        artifact.IsBackground = false;
-                        // Add watermark artifact to the first page
-                        document.Pages[1].Artifacts.Add(artifact);
-                        // Save PDF document
-                        document.Save(openFileDialog.FileName);
+                        Directory.CreateDirectory("Signed");
                     }
 
+                    PdfDocument.FromFile(openFileDialog.FileName)
+                        .ApplyWatermark($"<h5 style='opacity:0.5;'><span style='text-align: center; display: block;'>Подписано</span><hr>Сертификат: {cert.NumbContainer}<br>Владелец: {cert.FIO}<br>Действителен с {cert.DateFrom.ToShortDateString()} по {cert.DateTo.ToShortDateString()}</h5>", 
+                                            50, IronPdf.Editing.VerticalAlignment.Top, IronPdf.Editing.HorizontalAlignment.Right)
+                        .SaveAs(Path.Combine(Environment.CurrentDirectory, "Signed", openFileDialog.SafeFileName));
 
                     AddDataClass.InsertData($"insert into DocumentState (docName, signDate, ecp_id) values('{System.IO.Path.GetFileNameWithoutExtension(openFileDialog.FileName)}', DATE'{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}', {cert.Id})");
                 }
